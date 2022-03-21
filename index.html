@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style/style.css">
+    <!-- google font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Grandstander:wght@300;400;600;700&display=swap" rel="stylesheet"> 
+    <!-- /google font -->
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Pomodoro!</h1>
+
+        <div class="wrapper">
+            <div class="pomodoro">
+                <img src="images/pomodoro.png" alt="smiling tomato">
+            </div>
+            <div class="controls">
+                <div class="timers">
+                    <div id="work-timer" class="timer timer--active">00:60</div>
+                    <div id="break-timer" class="timer">00:15</div>
+                </div>
+                <button id="btn-control" class="btn-control">Play!</button>
+                <button id="btn-add-time" class="btn-add-time">+1 minute!</button>
+            </div>
+        </div>
+    </div>
+    
+    
+    <script src="js/main.js"></script>
+</body>
+</html>
