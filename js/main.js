@@ -1,3 +1,4 @@
+const container = document.querySelector('.container');
 const circle = document.querySelector('#circle-timer');
 const needle = document.querySelector('.needle');
 const workTimer = document.querySelector('#work-timer');
@@ -40,14 +41,22 @@ const decrement = () => {
             inWorkPhase = false;
             currentSeconds = breakSeconds;
             currentTimer = breakTimer;
+            container.classList.add('break-phase');
             workTimer.classList.remove('timer--active');
             breakTimer.classList.add('timer--active');
 
             timer = setInterval(decrement, 1000);
         } else {
-            // fine lavoro e pausa
-            controlBtn.classList.remove('btn-control--pause');
-            controlBtn.setAttribute('disabled', 'disabled');
+            // fine lavoro e pausa quindi reset
+            container.classList.remove('break-phase');
+            workTimer.classList.add('timer--active');
+            breakTimer.classList.remove('timer--active');
+            currentSeconds = workSeconds;
+            currentTimer = workTimer;
+            inWorkPhase = true;
+            timer = setInterval(decrement, 1000);
+            updateTimer(workTimer, workSeconds);
+            updateTimer(breakTimer,breakSeconds);
         }
     }
 };
