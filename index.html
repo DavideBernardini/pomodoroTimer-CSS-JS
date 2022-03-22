@@ -18,15 +18,21 @@
 
         <div class="wrapper">
             <div class="pomodoro">
-                <img src="images/pomodoro.png" alt="smiling tomato">
+                <svg class="progress-ring progress-ring--shadow" viewBox="0 0 110 110">
+                    <circle r="50" cx="50%" cy="50%" />      
+                </svg>
+                <svg class="progress-ring progress-ring--timer" viewBox="0 0 110 110">                
+                    <circle id="circleTimer" r="50" cx="50%" cy="50%" />              
+                </svg>
+                <div class="needle"></div>
             </div>
             <div class="controls">
                 <div class="timers">
                     <div id="work-timer" class="timer timer--active">00:60</div>
                     <div id="break-timer" class="timer">00:15</div>
                 </div>
-                <button id="btn-control" class="btn-control">Play!</button>
-                <button id="btn-add-time" class="btn-add-time">+1 minute!</button>
+                <button id="btn-control" class="btn-control"></button>
+                <button id="btn-add-time" class="btn-add-time" disabled>+1 minute!</button>
             </div>
         </div>
     </div>
