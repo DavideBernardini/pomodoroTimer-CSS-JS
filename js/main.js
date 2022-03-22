@@ -5,12 +5,14 @@ const breakTimer = document.querySelector('#break-timer');
 const controlBtn = document.querySelector('#btn-control');
 const addTimeBtn = document.querySelector('#btn-addTime');
 
-const workSeconds = 30;
+const workSeconds = 5;
 const breakSeconds = 5;
 
 let timer;
 let currentSeconds = workSeconds; // variabile di appoggio
+let currentTimer = workTimer // variabile di appoggio
 let isPaused = true;
+let inWorkPhase = true;
 
 const updateTimer = (element, total) => {
     const minutes = Math.floor(total / 60);
@@ -19,22 +21,36 @@ const updateTimer = (element, total) => {
     element.textContent = `${minutes}:${formattedSeconds}`;
 };
 
+updateTimer(workTimer, workSeconds);
+updateTimer(breakTimer,breakSeconds);
+
 const decrement = () => {
     if (isPaused) {
         return;
     }
 
     currentSeconds--;
+    updateTimer(currentTimer, currentSeconds);
 
     if (currentSeconds === 0) {
         clearInterval(timer);
+
+        if (inWorkPhase) {
+            // in pausa
+            inWorkPhase = false;
+            currentSeconds = breakSeconds;
+            currentTimer = breakTimer;
+            workTimer.classList.remove('timer--active');
+            breakTimer.classList.add('timer--active');
+
+            timer = setInterval(decrement, 1000);
+        } else {
+            // fine lavoro e pausa
+            controlBtn.classList.remove('btn-control--pause');
+            controlBtn.setAttribute('disabled', 'disabled');
+        }
     }
-
-    updateTimer(workTimer, currentSeconds);
 };
-
-updateTimer(workTimer, workSeconds);
-updateTimer(breakTimer,breakSeconds);
 
 controlBtn.addEventListener('click',
 function() {
