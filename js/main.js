@@ -1,17 +1,24 @@
+// nodi
 const container = document.querySelector('.container');
 const circle = document.querySelector('#circle-timer');
 const needle = document.querySelector('.needle');
 const workTimer = document.querySelector('#work-timer');
 const breakTimer = document.querySelector('#break-timer');
 const controlBtn = document.querySelector('#btn-control');
-const addTimeBtn = document.querySelector('#btn-addTime');
+const addTimeBtn = document.querySelector('#btn-add-time');
 
+// variabili audio
+const beep = new Audio('../audio/Beep.mp3');
+const blink = new Audio('../audio/BlinkTwice.mp3');
+
+// variabili timer
 const workSeconds = 5;
 const breakSeconds = 5;
-
+const increment = 60;
 let timer;
 let currentSeconds = workSeconds; // variabile di appoggio
-let currentTimer = workTimer // variabile di appoggio
+let currentTimer = workTimer; // variabile di appoggio
+let currentTotal = workSeconds; // variabile di appoggio come valore fisso per percentuale
 let isPaused = true;
 let inWorkPhase = true;
 
@@ -25,6 +32,20 @@ const updateTimer = (element, total) => {
 updateTimer(workTimer, workSeconds);
 updateTimer(breakTimer,breakSeconds);
 
+// cerchi
+const radius = 50;
+const circumference = radius * 2 * Math.PI;
+circle.style.strokeDasharray = circumference;
+circle.style.strokeDashoffset = circumference;
+
+const setProgress = (percentage) => {
+    const offset = circumference -(percentage / 100) * circumference;
+    const rotation = (percentage / 100) * 360;
+    circle.style.strokeDashoffset = offset;
+    needle.style.transform = `rotate(${rotation}deg)`;
+};
+
+
 const decrement = () => {
     if (isPaused) {
         return;
@@ -33,11 +54,15 @@ const decrement = () => {
     currentSeconds--;
     updateTimer(currentTimer, currentSeconds);
 
+    const percentage = Math.ceil(((currentTotal - currentSeconds) / currentTotal) * 100);
+    setProgress(percentage);
+
     if (currentSeconds === 0) {
         clearInterval(timer);
 
         if (inWorkPhase) {
             // in pausa
+            beep.play();
             inWorkPhase = false;
             currentSeconds = breakSeconds;
             currentTimer = breakTimer;
@@ -48,6 +73,7 @@ const decrement = () => {
             timer = setInterval(decrement, 1000);
         } else {
             // fine lavoro e pausa quindi reset
+            blink.play();
             container.classList.remove('break-phase');
             workTimer.classList.add('timer--active');
             breakTimer.classList.remove('timer--active');
@@ -72,7 +98,15 @@ function() {
     }
     
     if (!timer) {
+        addTimeBtn.removeAttribute('disabled', 'disabled');
         timer = setInterval(decrement, 1000);
     }
     
+});
+
+addTimeBtn.addEventListener('click',
+function() {
+    currentSeconds += increment;
+    currentTotal += increment;
+    updateTimer(currentTimer, currentSeconds);
 });

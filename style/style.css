@@ -30,6 +30,7 @@ body {
   justify-content: center;
   align-items: center;
   transition: background-color 1s ease-in, color 1s ease-in;
+  overflow: hidden;
 }
 
 .container.break-phase {
@@ -109,6 +110,8 @@ h1 {
   fill: transparent;
   stroke-width: 6;
   stroke: var(--primary-color);
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
   transition: stroke-dashoffset 0.5s ease-in;
 }
 
