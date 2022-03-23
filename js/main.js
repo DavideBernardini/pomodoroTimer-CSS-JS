@@ -12,8 +12,8 @@ const beep = new Audio('../audio/Beep.mp3');
 const blink = new Audio('../audio/BlinkTwice.mp3');
 
 // variabili timer
-const workSeconds = 5;
-const breakSeconds = 5;
+const workSeconds = 1500;
+const breakSeconds = 300;
 const increment = 60;
 let timer;
 let currentSeconds = workSeconds; // variabile di appoggio
